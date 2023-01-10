@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, CardMedia, CircularProgress, Container, Grid, Stack, Typography } from '@mui/material';
+import { Alert, Button, Card, CardContent, CardMedia, CircularProgress, Container, Grid, InputAdornment, Modal, Snackbar, Stack, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react'
 import axios from 'axios';
@@ -8,16 +8,18 @@ import { useDispatch,useSelector } from 'react-redux';
 import Slider from "react-slick";
 import { setCategory } from '../Features/CategorySlicer';
 import {useNavigate} from 'react-router-dom'
-import { CheckBox, Visibility } from '@mui/icons-material';
+import { CheckBox, Search, Visibility } from '@mui/icons-material';
+
 let image='https://img.freepik.com/premium-vector/e-commerce-icon-robotic-hand-internet-shopping-online-purchase-add-cart_127544-586.jpg?w=2000';
 let image2='https://i.pinimg.com/originals/82/0c/98/820c981247cc8be38e2bc3c433fc77f4.jpg'
 let image3='https://media.istockphoto.com/id/1206800961/photo/online-shopping-and-payment-man-using-tablet-with-shopping-cart-icon-digital-marketing.jpg?s=612x612&w=0&k=20&c=qG_9JB9ll4P5to97_HVxzMqhhzF0Gi1nWM_hNeiotbk=';
-const HomePage = () => {
 
+const HomePage = () => {
+const [query,setQuery]=useState(null);
 const navigate=useNavigate();
 const {products}=useSelector((state)=>state.category);
 const dispatch=useDispatch();
-
+const [open,setOpen]=useState(false);
 
 
 
@@ -29,6 +31,21 @@ useEffect(()=>{
     console.log(e);
   })
 },[])
+
+useEffect(()=>{
+if(query!==null){
+     axios.put('http://localhost:5000/api/products/Search',{query}).then((res)=>{
+    if(res.data.length===0){
+    }
+    else{
+      dispatch(setCategory(res.data))
+    }
+  }).catch((e)=>{
+    console.log(e);
+  })
+  }
+},[query])
+
 
 
 
@@ -42,15 +59,7 @@ useEffect(()=>{
         autoplaySpeed:2500
       };
     
-      if(products.length===0){
-        return(
-          <>
-           <Box sx={{display:'flex',justifyContent:'center',alignItems:'center',height:'500px'}}>
-            <CircularProgress  />
-            </Box>
-          </>
-        )
-      }
+      
 
     return ( <>
     
@@ -67,6 +76,23 @@ useEffect(()=>{
      </Slider>
     
     <Container >
+
+      <Box mt={3} sx={{display:'flex',justifyContent:'center'}} >
+        
+       <TextField
+       placeholder='Search for an Item here..'
+       value={query}
+       type='text'
+       sx={{width:'50%'}}
+       onChange={(e)=>setQuery(e.target.value)}
+       InputProps={{endAdornment:(
+        <InputAdornment position='end'> <Search/> </InputAdornment>
+       )}}
+        />
+
+      </Box>
+
+
         <Grid  container  mt={2} sx={{display:'flex',justifyContent:'center'}} >
         {products.map((product)=>{
           return(
@@ -112,6 +138,9 @@ useEffect(()=>{
         
     </Container>
 
+{/* <Snackbar open={open} onClose={()=>{setQuery('');setOpen(false)}} >
+  <Alert onClose={()=>{setQuery('');setOpen(false)} } severity='error'> No Item Found! </Alert> 
+</Snackbar> */}
 
     </> );
 }
