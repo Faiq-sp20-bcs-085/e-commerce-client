@@ -1,4 +1,4 @@
-import { Alert, Button, Card, CardContent, CardMedia, CircularProgress, Container, Grid, InputAdornment, Modal, Snackbar, Stack, TextField, Typography } from '@mui/material';
+import { Alert, Button, Card, CardContent, CardMedia, CircularProgress, Container, Grid, IconButton, InputAdornment, Modal, Snackbar, Stack, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react'
 import axios from 'axios';
@@ -8,32 +8,41 @@ import { useDispatch,useSelector } from 'react-redux';
 import Slider from "react-slick";
 import { setCategory } from '../Features/CategorySlicer';
 import {useNavigate} from 'react-router-dom'
-import { CheckBox, Search, Visibility } from '@mui/icons-material';
+import { CheckBox, Search, Sync, Visibility } from '@mui/icons-material';
 
 let image='https://img.freepik.com/premium-vector/e-commerce-icon-robotic-hand-internet-shopping-online-purchase-add-cart_127544-586.jpg?w=2000';
 let image2='https://i.pinimg.com/originals/82/0c/98/820c981247cc8be38e2bc3c433fc77f4.jpg'
 let image3='https://media.istockphoto.com/id/1206800961/photo/online-shopping-and-payment-man-using-tablet-with-shopping-cart-icon-digital-marketing.jpg?s=612x612&w=0&k=20&c=qG_9JB9ll4P5to97_HVxzMqhhzF0Gi1nWM_hNeiotbk=';
 
 const HomePage = () => {
-const [query,setQuery]=useState(null);
+const [query,setQuery]=useState('');
 const navigate=useNavigate();
 const {products}=useSelector((state)=>state.category);
 const dispatch=useDispatch();
 const [open,setOpen]=useState(false);
-
+const [pageNo,setPageNo]=useState(1);
 
 
 useEffect(()=>{
-  axios.get('http://localhost:5000/api/products').then((res)=>{
+  axios.get(`http://localhost:5000/api/products?page=${pageNo}`).then((res)=>{
     dispatch(setCategory(res.data))
 
   }).catch((e)=>{
     console.log(e);
   })
-},[])
+},[pageNo])
 
 useEffect(()=>{
-if(query!==null){
+  if(query===''){
+     axios.get(`http://localhost:5000/api/products?page=${pageNo}`).then((res)=>{
+    dispatch(setCategory(res.data))
+
+  }).catch((e)=>{
+    console.log(e);
+  })
+  }
+
+else if(query!==''){
      axios.put('http://localhost:5000/api/products/Search',{query}).then((res)=>{
     if(res.data.length===0){
     }
@@ -45,6 +54,8 @@ if(query!==null){
   })
   }
 },[query])
+
+
 
 
 
@@ -137,6 +148,44 @@ if(query!==null){
      </Grid>
         
     </Container>
+  
+{products.length===6 && query === '' ?(
+<>
+  <Box mt={5} sx={{display:'flex',justifyContent:'center',alignItems:'center'}}>
+      <Box>
+        <IconButton
+        onClick={()=>{
+     setPageNo(pageNo+1)
+        }}
+        > <Sync sx={{fontSize:'35px'}}  /> </IconButton>  
+        <Typography variant='body2'> Show more... </Typography>
+      </Box>
+      
+    </Box>
+</>
+): query!==''? (
+<>
+</>
+)
+ :(
+  
+  <>
+  <Box mt={5} sx={{display:'flex',justifyContent:'center',alignItems:'center'}}>
+      <Box>
+        <IconButton
+        onClick={()=>{
+     setPageNo(pageNo-1)
+        }}
+        > <Sync sx={{fontSize:'35px'}}  /> </IconButton>  
+        <Typography variant='body2'> Go Back... </Typography>
+      </Box>
+      
+    </Box>
+
+  </>
+)  }
+
+  
 
 {/* <Snackbar open={open} onClose={()=>{setQuery('');setOpen(false)}} >
   <Alert onClose={()=>{setQuery('');setOpen(false)} } severity='error'> No Item Found! </Alert> 
