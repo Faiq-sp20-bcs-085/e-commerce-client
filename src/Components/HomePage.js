@@ -174,7 +174,12 @@ else if(query!==''){
       <Box>
         <IconButton
         onClick={()=>{
-     setPageNo(pageNo-1)
+     if(products.length===0){
+      setPageNo(1)
+     }
+     else{
+      setPageNo(pageNo -1)
+     }
         }}
         > <Sync sx={{fontSize:'35px'}}  /> </IconButton>  
         <Typography variant='body2'> Go Back... </Typography>

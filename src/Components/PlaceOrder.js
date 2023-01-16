@@ -6,6 +6,7 @@ import jwt_decode from 'jwt-decode'
 import axios from 'axios';
 import { Box, Container } from '@mui/system';
 import {  Delete, LocalShipping, LocationOn, Person, } from '@mui/icons-material';
+
 import Image from '../Assets/Images/shinywhite.webp'
 
 const PlaceOrder = () => {
@@ -14,8 +15,18 @@ const dispatch=useDispatch();
     const [open,setOpen]=useState(false);
     const [user,setUser]=useState('')
     const [loading,setLoading]=useState(true);
-    
+    const [userId,setUserId]=useState('')
+
 const navigate=useNavigate();
+
+
+useEffect(()=>{
+    const token=sessionStorage.getItem('token');
+    if(token){
+    setUserId(jwt_decode(token))
+    }
+},[])
+
 useEffect(()=>{
     if(cart.length===0 || Object.keys(ShippingAddress).length===0){
         setTimeout(()=>{
@@ -42,6 +53,14 @@ if(token){
 
 },[])
 
+const CheckOut=async()=>{
+  axios.post(`http://localhost:5000/api/orders/${userId._id}`,{cart,totalbill}).then((res)=>{
+   window.location.assign(res.data)
+  
+  }).catch((e)=>{
+    console.log(e);
+  })
+}
 
 
     return ( 
@@ -156,7 +175,9 @@ if(token){
                 </TableBody>
                 </Table>
                </TableContainer>
-               <Button variant='body2' sx={{marginTop:'10px',width:'100%',backgroundColor:'grey',"&:hover":{backgroundColor:'grey'}}}> Place Order </Button>
+               <Button variant='body2' sx={{marginTop:'10px',width:'100%',backgroundColor:'grey',"&:hover":{backgroundColor:'grey'}}}
+             onClick={CheckOut}
+               > Place Order </Button>
            </Box>
 
         </Box>

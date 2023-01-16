@@ -9,7 +9,7 @@ const CartSlicer=createSlice({
        
         ShippingAddress:{},
         bill:0,
-        charges:20,
+        charges:0,
         totalbill:0
 
     },
