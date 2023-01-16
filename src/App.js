@@ -12,6 +12,8 @@ import ShippingAddress from "./Components/ShippingAddress";
 
 import Payment from "./Components/Payment";
 import PlaceOrder from "./Components/PlaceOrder";
+import Successfull from "./Components/Successfull";
+import UserOrders from "./Components/UserOrders";
 
 function App() {
 
@@ -34,6 +36,8 @@ function App() {
 <Route path='/Shipping' element={<ShippingAddress/>}  />
 <Route path ='/Payment' element={<Payment/>} />
 <Route path='/Placeorder'  element={<PlaceOrder/>} />
+<Route path='/payment/successful' element={<Successfull/>} />
+<Route path='/user/orders' element={<UserOrders/>} />
 <Route path ='*' element={<NotFound/>}  />
 
 
