@@ -42,7 +42,7 @@ useEffect(()=>{
              console.log(e);
             })
     }
-})
+},[rating])
 
     useEffect(()=>{
         const prod_id=sessionStorage.getItem('prod_id')

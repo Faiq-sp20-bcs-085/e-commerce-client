@@ -14,11 +14,25 @@ import Payment from "./Components/Payment";
 import PlaceOrder from "./Components/PlaceOrder";
 import Successfull from "./Components/Successfull";
 import UserOrders from "./Components/UserOrders";
-
+import { useEffect,useState } from "react";
+import jwt_decode from 'jwt-decode'
+import Admin from "./Components/Admin";
+import { LoggedInUser } from "./Components/Services/CurrentUser";
 function App() {
 
+  const [user,setUser]=useState('')
   
+// useEffect(()=>{
+// const token=sessionStorage.getItem('token');
+// if(token){
+// setUser(jwt_decode(token));
 
+// }
+// },[])
+
+useEffect(()=>{
+setUser(LoggedInUser())
+},[])
 
   return (
    <>
@@ -38,7 +52,8 @@ function App() {
 <Route path='/Placeorder'  element={<PlaceOrder/>} />
 <Route path='/payment/successful' element={<Successfull/>} />
 <Route path='/user/orders' element={<UserOrders/>} />
-<Route path ='*' element={<NotFound/>}  />
+{user.isAdmin=== true? <Route path='/admin/dashboard' element={<Admin/>}  />: '' }
+<Route path ='*' element={<NotFound/>}   />
 
 
 </Routes>

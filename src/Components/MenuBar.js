@@ -130,7 +130,7 @@ useEffect(()=>{
           return(
             <>
             <Box sx={{display:'flex',alignItems:'center'}}> 
-            <MenuItem> <Dashboard/> <Typography variant='body2' sx={{marginLeft:'4px'}}>  Dashboard </Typography> </MenuItem>
+            <MenuItem onClick={()=>{navigate('/admin/dashboard');setOpenprofile(false)}}  > <Dashboard/> <Typography variant='body2' sx={{marginLeft:'4px'}}>  Dashboard </Typography> </MenuItem>
            
             </Box>
             <Box sx={{display:'flex',alignItems:'center'}}>
@@ -150,7 +150,7 @@ useEffect(()=>{
            
             </Box>
             <Box sx={{display:'flex',alignItems:'center'}}>
-              <MenuItem> <CreditCard/> <Typography variant='body2' sx={{marginLeft:'4px'}}> My Orders </Typography> </MenuItem>
+              <MenuItem onClick={()=>{navigate('/user/orders');setOpenprofile(false)}}> <CreditCard/> <Typography variant='body2' sx={{marginLeft:'4px'}}> My Orders </Typography> </MenuItem>
             </Box>
             <Box sx={{display:'flex',alignItems:'center'}}>
               <MenuItem onClick={()=>{sessionStorage.removeItem('token');  persistor.pause();  persistor.flush().then(()=>{persistor.purge()}) ; navigate('/'); setOpenprofile(false); window.location.reload() }}> <Logout/> <Typography variant='body2' sx={{marginLeft:'4px'}}> Logout </Typography> </MenuItem>
