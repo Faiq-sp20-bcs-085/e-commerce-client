@@ -99,7 +99,7 @@ useEffect(()=>{
                     
                     </Box>
                     <Box>
-                      <IconButton sx={{marginBottom:'17px'}}  disabled={amount ===0?true :false} onClick={()=> navigate(`/${user._id}/Cart`)}>  <Badge badgeContent={amount} color='primary'   ><ShoppingBag sx={{height:'25px'}}/> </Badge>    </IconButton> 
+                      <IconButton sx={{marginBottom:'17px'}}  disabled={amount ===0?true :false} onClick={()=> navigate(`/${user._id}/Cart`)}>  <Badge badgeContent={amount} color='primary'   ><ShoppingBag sx={{height:'25px',color: amount ===0 ? '' : 'green' }}/> </Badge>    </IconButton> 
                     </Box>
                 </Box>
                 </>

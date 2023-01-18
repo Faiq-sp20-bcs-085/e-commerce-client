@@ -40,7 +40,7 @@ return(
        <Box sx={{display:'flex',justifyContent:'center'}}>
        <TableContainer>
         <Table>
-            <TableHead>
+            <TableHead >
                 <TableRow>
                     <TableCell>
                         <Typography variant='h6' > ID</Typography>
@@ -60,7 +60,7 @@ return(
                 {orders.map((order)=>{
                     return(
                         
-                         <TableRow  >
+                         <TableRow >
                             <TableCell > <Typography variant='body2' sx={{fontWeight:'bold'}} > {order._id} </Typography> </TableCell>
                             
                             {order.status==='Pending' ? (

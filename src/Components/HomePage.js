@@ -8,7 +8,7 @@ import { useDispatch,useSelector } from 'react-redux';
 import Slider from "react-slick";
 import { setCategory } from '../Features/CategorySlicer';
 import {useNavigate} from 'react-router-dom'
-import { CheckBox, Search, Sync, Visibility } from '@mui/icons-material';
+import { ArrowBack, ArrowForward, CheckBox, Search, Sync, Visibility } from '@mui/icons-material';
 
 let image='https://c0.wallpaperflare.com/preview/739/734/558/women-fashion-sale-hair.jpg';
 let image2='https://img.freepik.com/free-vector/isometric-e-commerce-shopping-basket_79603-1000.jpg?w=2000'
@@ -86,22 +86,90 @@ else if(query!==''){
      </div>
      </Slider>
     </Box>
-    <Container >
-
-      <Box mt={3} sx={{display:'flex',justifyContent:'center'}} >
-        
+    
+<Container> 
+      <Box mt={3} sx={{display:'flex',justifyContent:'center',alignItems:'center'}} >
+       
        <TextField
+       
+        style={{width:'50%', marginLeft: query === '' ? 'auto' :'' }}
        placeholder='Search for an Item here..'
        value={query}
        type='text'
-       sx={{width:'50%'}}
+      
        onChange={(e)=>setQuery(e.target.value)}
        InputProps={{endAdornment:(
         <InputAdornment position='end'> <Search/> </InputAdornment>
        )}}
         />
+        
+          
+          {products.length===6 && query === ''   && pageNo ===1 ?(
 
+  <Box  sx={{marginLeft:'auto'}}>
+      <Box  >
+        <IconButton 
+        onClick={()=>{
+     setPageNo(pageNo+1)
+        }}
+        >  <ArrowForward sx={{color:'green',fontSize:'35px'}} /> </IconButton>  
+        
       </Box>
+      
+    </Box>
+
+):  query!=='' ?  (
+  <>
+  
+  </>
+):  products.length===6 && pageNo >=2? (
+<>
+ <Box  sx={{marginLeft:'auto',display:'flex'}}>
+      <Box  >
+        <IconButton 
+        onClick={()=>{
+     setPageNo(pageNo-1)
+        }}
+        >  <ArrowBack sx={{color:'green',fontSize:'35px'}} /> </IconButton>  
+        
+      </Box>
+
+      <Box  >
+        <IconButton 
+        onClick={()=>{
+     setPageNo(pageNo+1)
+        }}
+        >  <ArrowForward sx={{color:'green',fontSize:'35px'}} /> </IconButton>  
+        
+      </Box>
+      
+    </Box>
+</>
+)
+ : products.length <6 ? (
+  
+  <>
+  <Box  sx={{marginLeft:'auto',display:'flex'}}>
+      <Box  >
+        <IconButton 
+        onClick={()=>{
+     setPageNo(pageNo-1)
+        }}
+        >  <ArrowBack sx={{color:'green',fontSize:'35px'}} /> </IconButton>  
+        
+      </Box>
+
+      
+      
+    </Box>
+
+  </>
+): ''
+  }
+
+        </Box>
+       </Container>
+      <Container >
 
 
         <Grid  container  mt={2} sx={{display:'flex',justifyContent:'center'}} >
@@ -150,52 +218,11 @@ else if(query!==''){
         
     </Container>
   
-{products.length===6 && query === '' ?(
-<>
-  <Box mt={5} sx={{display:'flex',justifyContent:'center',alignItems:'center'}}>
-      <Box>
-        <IconButton
-        onClick={()=>{
-     setPageNo(pageNo+1)
-        }}
-        > <Sync sx={{fontSize:'35px'}}  /> </IconButton>  
-        <Typography variant='body2'> Show more... </Typography>
-      </Box>
-      
-    </Box>
-</>
-): query!==''? (
-<>
-</>
-)
- :(
-  
-  <>
-  <Box mt={5} sx={{display:'flex',justifyContent:'center',alignItems:'center'}}>
-      <Box>
-        <IconButton
-        onClick={()=>{
-     if(products.length===0){
-      setPageNo(1)
-     }
-     else{
-      setPageNo(pageNo -1)
-     }
-        }}
-        > <Sync sx={{fontSize:'35px'}}  /> </IconButton>  
-        <Typography variant='body2'> Go Back... </Typography>
-      </Box>
-      
-    </Box>
 
-  </>
-)  }
 
   
 
-{/* <Snackbar open={open} onClose={()=>{setQuery('');setOpen(false)}} >
-  <Alert onClose={()=>{setQuery('');setOpen(false)} } severity='error'> No Item Found! </Alert> 
-</Snackbar> */}
+
 
     </> );
 }
