@@ -11,8 +11,8 @@ import {useNavigate} from 'react-router-dom'
 import { useSelector,useDispatch } from 'react-redux';
 import { AddToCart } from '../Features/CartSlicer';
 import { confirmAlert } from 'react-confirm-alert';
-
-
+import { ToastContainer,toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ProductDescription = () => {
 
@@ -23,7 +23,7 @@ const ProductDescription = () => {
 const [rating,setRating]=useState(Number)
 
 const {cart}=useSelector((state)=>state.cart);
-
+const location=useLocation();
     const [product,setProduct]=useState({});
     const [user,setUser]=useState([]);
     const [text,setText]=useState('');
@@ -37,7 +37,10 @@ useEffect(()=>{
         axios.post(`http://localhost:5000/api/ratings/${prodId}`,{rating}).then(()=>{
             FetchProducts();
             setRating('')
-            setOpen(true);
+            // Toast.success('Successfully made');
+            toast.success('Rating Successfully Made',{
+                position:toast.POSITION.BOTTOM_LEFT
+            })
             }).catch((e)=>{
              console.log(e);
             })
@@ -184,9 +187,10 @@ useEffect(()=>{
      <Button endIcon={<ShoppingBag/>} variant='contained' sx={{backgroundColor:'lightgrey',"&:hover":{backgroundColor:'grey'}}}
      onClick={()=>{
         if(!userId){
+
         setModalopen(true);
         setTimeout(()=>{
-            navigate('/Login')
+            navigate('/Login',{state:{from:location.pathname}})
         },2000)
         }else{
         
@@ -262,7 +266,7 @@ InputProps={{
 </Modal>
 
 
-
+<ToastContainer/>
 
     </> );
 }

@@ -10,9 +10,9 @@ import { setCategory } from '../Features/CategorySlicer';
 import {useNavigate} from 'react-router-dom'
 import { CheckBox, Search, Sync, Visibility } from '@mui/icons-material';
 
-let image='https://img.freepik.com/premium-vector/e-commerce-icon-robotic-hand-internet-shopping-online-purchase-add-cart_127544-586.jpg?w=2000';
-let image2='https://i.pinimg.com/originals/82/0c/98/820c981247cc8be38e2bc3c433fc77f4.jpg'
-let image3='https://media.istockphoto.com/id/1206800961/photo/online-shopping-and-payment-man-using-tablet-with-shopping-cart-icon-digital-marketing.jpg?s=612x612&w=0&k=20&c=qG_9JB9ll4P5to97_HVxzMqhhzF0Gi1nWM_hNeiotbk=';
+let image='https://c0.wallpaperflare.com/preview/739/734/558/women-fashion-sale-hair.jpg';
+let image2='https://img.freepik.com/free-vector/isometric-e-commerce-shopping-basket_79603-1000.jpg?w=2000'
+let image3='https://segwitz.com/wp-content/uploads/2021/09/why-ecommerce-need-mobile-apps.jpg';
 
 const HomePage = () => {
 const [query,setQuery]=useState('');
@@ -73,19 +73,19 @@ else if(query!==''){
       
 
     return ( <>
-    
+    <Box mt={2} sx={{paddingX:'17px'}}> 
     <Slider {...settings} >
      <div>
-       <img src={`${image}`} alt="" style={{height:'700px', width:'100%'}} />
+       <img src={`${image}`} alt="" style={{height:'590px', width:'100%'}} />
      </div>
      <div>
-       <img src={`${image2}`} alt="" style={{height:'700px',width:'100%'}} />
+       <img src={`${image2}`} alt="" style={{height:'590px',width:'100%'}} />
      </div>
      <div>
-       <img src={`${image3}`} alt="" style={{height:'700px',width:'100%'}} />
+       <img src={`${image3}`} alt="" style={{height:'590px',width:'100%'}} />
      </div>
      </Slider>
-    
+    </Box>
     <Container >
 
       <Box mt={3} sx={{display:'flex',justifyContent:'center'}} >
@@ -108,6 +108,7 @@ else if(query!==''){
         {products.map((product)=>{
           return(
             <>
+            
             <Grid m={1} item lg={3}  > 
               
               <Card sx={{width:'250px'}} >
@@ -138,7 +139,7 @@ else if(query!==''){
                 </Box>
                 </Box>
               </Card>
-
+                
             </Grid>
             
             </>

@@ -6,11 +6,16 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LockIcon from '@mui/icons-material/Lock';
 import {useState,useEffect} from 'react'
 import axios from 'axios';
-import {Link, useNavigate} from 'react-router-dom'
+import {Link, useLocation, useNavigate} from 'react-router-dom'
 const Login = () => {
 const navigate=useNavigate();
   const [email,setEmail]=useState('');
   const [password,setPassword]=useState('');
+const {state}=useLocation();
+
+
+
+
 
     return ( <>
      
@@ -55,8 +60,16 @@ const navigate=useNavigate();
        onClick={()=>{
         axios.post('http://localhost:5000/user/Login',{email,password}).then((res)=>{
             sessionStorage.setItem('token',res.data);
+            if(state){
+              navigate(state.from)
+              window.location.reload();
+            }
+            else{
             navigate('/');
-            window.location.reload();
+              window.location.reload();
+            }
+            
+          
            
         }).catch((e)=>{
             alert(e.response.data)

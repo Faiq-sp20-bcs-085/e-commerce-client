@@ -165,9 +165,8 @@ useEffect(()=>{
 
     return (
          <>
-    
-    <AppBar position='static'>
-<Toolbar sx={{display:'flex',justifyContent:'space-between', backgroundImage:`url(${Image})`,backgroundSize:'cover'}}>
+<AppBar position='static' >
+<Toolbar sx={{display:'flex',justifyContent:'space-between', backgroundImage:`url(${Image})`,backgroundSize:'cover',}}>
 <Box>
    <Link to='/'>  <img src={require('../Assets/Images/Logo.png')} style={{height:'80px',color:'blue'}}  alt="" /> </Link>
 </Box>

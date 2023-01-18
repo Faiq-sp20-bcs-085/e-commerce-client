@@ -22,13 +22,7 @@ function App() {
 
   const [user,setUser]=useState('')
   
-// useEffect(()=>{
-// const token=sessionStorage.getItem('token');
-// if(token){
-// setUser(jwt_decode(token));
 
-// }
-// },[])
 
 useEffect(()=>{
 setUser(LoggedInUser())
